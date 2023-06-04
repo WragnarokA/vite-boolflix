@@ -16,21 +16,37 @@ export default {
     },
     methods: {
         avviaRicerca() {
-            console.log("ricerca", this.store.searchText);
+            this.getSeries();
+            this.getMovies();
 
-            const moviesSearchUrl = `${this.store.apiUrl}movie?api_key=${this.store.apiKey}&query=${this.store.searchText}`
+        },
 
+        getMovies() {
+            const moviesSearchUrl = `${this.store.apiUrl}movie?api_key=${this.store.apiKey}&query=${this.searchTextSanificato}`
 
             axios.get(moviesSearchUrl).then(r => {
                 const movies = r.data.results;
                 console.log("richiesta", movies);
-
                 this.store.movies = movies
+            });
+        },
 
 
-            })
+        getSeries() {
+            const seriesSearchUrl = `${this.store.apiUrl}tv?api_key=${this.store.apiKey}&query=${this.searchTextSanificato}`
+
+            axios.get(seriesSearchUrl).then(r => {
+                const series = r.data.results;
+                console.log("richiesta", series);
+                this.store.series = series
+            });
 
         }
+
+
+
+
+
     }
 }
 
